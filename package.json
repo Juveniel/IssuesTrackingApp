@@ -1,0 +1,42 @@
+{
+  "name": "issues-tracking-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "node app/app.js",
+    "test": "./node_modules/.bin/mocha app/tests/**/*.js",
+    "test-browser": "start chrome http://127.0.0.1:8080/app/tests/index.html && http-server ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juveniel/IssuesTrackingApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Juveniel/IssuesTrackingApp/issues"
+  },
+  "homepage": "https://github.com/Juveniel/IssuesTrackingApp#readme",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "cookie-parser": "^1.4.3",
+    "crypto": "0.0.3",
+    "express": "^4.14.1",
+    "express-session": "^1.15.0",
+    "mongodb": "^2.2.22",
+    "mongoose": "^4.8.0",
+    "mongoose-unique-validator": "^1.0.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-beta10"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.4",
+    "chai": "^3.5.0",
+    "eslint": "^3.14.1",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
