@@ -7,8 +7,8 @@ module.exports = function(environment) {
             sessionSecret: 'secret ala bala',
             connectionString: 'mongodb://localhost:27017/issues-tracking-db',
             port: 3000,
-            email: 'issuesTrackingApp@gmail.com',
-            password: 'ninjas123456'
+            email: '',
+            password: ''
         },
         production: {
             cookieName: process.env.COOKIE_NAME,
