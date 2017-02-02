@@ -1,21 +1,24 @@
 /* Gulp Configuration */
-
+'use strict';
 // Load plugins
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     autoprefixer = require('gulp-autoprefixer'),
     cssnano = require('gulp-cssnano'),
+    sassLint = require('gulp-sass-lint'),
     uglify = require('gulp-uglify'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
-    cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
     del = require('del');
 
 // Styles
 gulp.task('styles', function() {
     return sass('public/scss/theme.scss', { style: 'expanded' })
+        .pipe(sassLint())
+        .pipe(sassLint.format())
+        .pipe(sassLint.failOnError())
         .pipe(autoprefixer('last 2 version'))
         .pipe(gulp.dest('public/dist'))
         .pipe(rename({ suffix: '.min' }))
