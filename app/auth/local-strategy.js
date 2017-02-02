@@ -6,7 +6,7 @@ module.exports = function (passport, app, config, data) {
 
     const authStrategy = new LocalStrategy(
         function (username, password, done) {
-            data.getUserByName(username)
+            data.getUserByUsername(username)
                 .then(user => {
                     if (user && user.authenticatePassword(password)) {
                         done(null, user);
@@ -16,6 +16,6 @@ module.exports = function (passport, app, config, data) {
                 })
                 .catch(error => done(error, false));
         });
-
+    
     passport.use(authStrategy);
 };

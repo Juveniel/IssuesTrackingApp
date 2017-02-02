@@ -7,7 +7,7 @@ const mongoose = require('mongoose'),
 
 const LETTERS = /^[A-Za-zА-Яа-я]+$/,
     ALPHA_PATTERN = /^[A-Za-zА-Яа-я0-9]+$/,
-    EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 let UserSchema = new Schema({
     username: {
@@ -15,8 +15,8 @@ let UserSchema = new Schema({
         required: true,
         unique: true,
         dropDups: true,
-        minlength: [3, 'Username is too short!'],
-        maxlength: [50, 'Username is too long!'],
+        minLength: [3, 'Username is too short!'],
+        maxLength: [50, 'Username is too long!'],
         match: ALPHA_PATTERN
     },
     email: {
@@ -33,15 +33,15 @@ let UserSchema = new Schema({
     firstName: {
         type: String,
         required: true,
-        minlength: [3, 'First mame is too short!'],
-        maxlength: [50, 'First name is too long!'],
+        minLength: [3, 'First mame is too short!'],
+        maxLength: [50, 'First name is too long!'],
         match: LETTERS
     },
     lastName: {
         type: String,
         required: true,
-        minlength: [3, 'Last name is too short!'],
-        maxlength: [50, 'Last name is too long!'],
+        minLength: [3, 'Last name is too short!'],
+        maxLength: [50, 'Last name is too long!'],
         match: LETTERS
     },
     age: {

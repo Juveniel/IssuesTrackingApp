@@ -30,11 +30,7 @@ module.exports = function(data) {
                     if (!req.isAuthenticated()) {
                         res.status(401).redirect('/unauthorized');
                     } else {
-                        if (req.user.role === 'admin') {
-                            res.render('user/profile', { user: req.user, isAdmin: true });
-                        } else {
-                            res.render('user/profile', { user: req.user, isAdmin: false });
-                        }
+                        console.log('profile');
                     }
                 });
         },
@@ -49,7 +45,7 @@ module.exports = function(data) {
                         return data.findUserByIdAndUpdate(req.user._id, updatedUser);
                     }
                 })
-                .then(user => {
+                .then(() => {
                     res.status(200)
                         .send({ redirectRoute: '/profile' });
                 })
@@ -62,7 +58,7 @@ module.exports = function(data) {
             return Promise.resolve()
                 .then(() => {
                     if (!req.isAuthenticated()) {
-                        res.render('unathorized', {});
+                        res.render('unauthorized', {});
                     } else {
                         res.redirect('/home');
                     }

@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app, passport, express, data) {
+module.exports = function(app, passport, express) {
     let homeController = require('../controllers/home-controller')();
 
     let router = new express.Router();

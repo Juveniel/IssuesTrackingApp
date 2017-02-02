@@ -33,7 +33,10 @@
     "pug": "^2.0.0-beta10"
   },
   "devDependencies": {
+    "@types/core-js": "^0.9.35",
+    "@types/express": "^4.0.35",
     "@types/node": "^7.0.4",
+    "@types/passport": "^0.3.2",
     "chai": "^3.5.0",
     "del": "^2.2.2",
     "eslint": "^3.14.1",
@@ -43,12 +46,12 @@
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-imagemin": "^3.1.1",
-    "gulp-jshint": "^2.0.4",
     "gulp-livereload": "^3.8.1",
     "gulp-notify": "^3.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
     "gulp-uglify": "^2.0.1",
+    "jshint": "^2.9.4",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7"
   }

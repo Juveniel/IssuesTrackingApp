@@ -61,7 +61,7 @@ module.exports = function(data) {
                         res.redirect('/home');
                     }
                 })
-                .then(dbUser => {
+                .then(() => {
                     passport.authenticate('local')(req, res, function() {
                         res.status(200)
                             .send({ redirectRoute: '/profile' });
