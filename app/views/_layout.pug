@@ -10,11 +10,13 @@ html(lang="en")
         link(rel="stylesheet", href="/static/styles/fonts.css")
         link(rel="stylesheet", href="/static/bower_components/font-awesome/css/font-awesome.min.css")
         link(rel="stylesheet", href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="/static/dist/theme.min.css")
         block additionalCss
 
     body(class='page-' + bodyClass)
 
-        #page-loader
+        include partials/navigation.pug
+
         #content
             block content
 
