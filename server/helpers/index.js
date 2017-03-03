@@ -25,7 +25,7 @@ helpers.errorHelper = function (err) {
             fieldName = secondPartMsg.substring(0, secondPartMsg.indexOf('_'));
 
         errors.push(util.format(
-            messages['unique'],
+            messages.unique,
             fieldName)
         );
 

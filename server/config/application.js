@@ -4,16 +4,15 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
-    path = require('path');
+    path = require('path'),
+    cors = require('cors');
 
 /* Setup App */
 module.exports = function(config){
     let app = express();
 
     /* View Engine */
-    app.set('view engine', 'pug');
-    app.set('views', path.join(__dirname, '../views'));
-    app.use('/static', express.static(path.join(__dirname, '../../public')));
+    //app.use('/', express.static(path.join(__dirname, '../../public')));
 
     /* Cookies & session */
     app.use(bodyParser.json());
@@ -24,8 +23,19 @@ module.exports = function(config){
         resave: true,
         saveUninitialized: true
     }));
+
+    /* CORS */
+    app.use(function (req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+
+        next();
+    });
+    app.options('*', cors());
     
-    /* App start f */
+    /* App start func */
     app.start = function(){
         const port = config.port;
         app.listen(port, () => console.log(`App running at: http://localhost:${port}`));

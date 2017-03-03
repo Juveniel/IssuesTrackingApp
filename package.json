@@ -4,24 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
-    "start": "node app/app.js",
-    "test": "./node_modules/.bin/mocha app/tests/**/*.js",
-    "test-browser": "start chrome http://127.0.0.1:8080/app/tests/index.html && http-server ./"
+    "postinstall": "",
+    "start": "node server/app.js",
+    "test": "./node_modules/.bin/mocha server/tests/**/*.js",
+    "test-browser": "start chrome http://127.0.0.1:8080/server/tests/index.html && http-server ./"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Juveniel/IssuesTrackingApp.git"
+    "url": "git+https://github.com/Juveniel/IssuesTrackingApp-Server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Juveniel/IssuesTrackingApp/issues"
+    "url": "https://github.com/Juveniel/IssuesTrackingApp-Server/issues"
   },
-  "homepage": "https://github.com/Juveniel/IssuesTrackingApp#readme",
+  "homepage": "https://github.com/Juveniel/IssuesTrackingApp-Server#readme",
   "dependencies": {
     "body-parser": "^1.16.0",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
     "crypto": "0.0.3",
     "express": "^4.14.1",
     "express-session": "^1.15.0",
@@ -40,21 +41,8 @@
     "chai": "^3.5.0",
     "del": "^2.2.2",
     "eslint": "^3.14.1",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
-    "gulp-cache": "^0.4.5",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.2",
-    "gulp-imagemin": "^3.1.1",
-    "gulp-livereload": "^3.8.1",
-    "gulp-notify": "^3.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-ruby-sass": "^2.1.1",
-    "gulp-sass-lint": "^1.3.2",
-    "gulp-uglify": "^2.0.1",
     "jshint": "^2.9.4",
     "mocha": "^3.2.0",
-    "sass-lint": "^1.10.2",
     "sinon": "^1.17.7"
   }
 }

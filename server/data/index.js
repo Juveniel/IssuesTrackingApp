@@ -9,7 +9,7 @@ module.exports = function() {
         data = {};
 
     // requiring all model files
-    fs.readdirSync('./app/models')
+    fs.readdirSync('./server/models')
         .filter(x => x.includes(modelFileNamesPattern))
         .forEach(file => {
             let modelName = file.charAt(0).toUpperCase() + file.substr(1, file.length - modelFileNamesPattern.length - 1);
@@ -17,7 +17,7 @@ module.exports = function() {
         });
     
     // requiring all data files with the models
-    fs.readdirSync('./app/data')
+    fs.readdirSync('./server/data')
         .filter(x => x.includes(dataFileNamesPattern))
         .forEach(file => {
             let dataModule =
