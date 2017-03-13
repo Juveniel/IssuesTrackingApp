@@ -17,4 +17,5 @@ module.exports = function(app, config, data) {
     });
 
     require('./local-strategy')(passport, app, config, data);
+    require('./jwt-strategy')(passport, app, config, data);
 };

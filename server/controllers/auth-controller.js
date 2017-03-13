@@ -1,42 +1,40 @@
 'use strict';
 const passport = require('passport'),
-    helpers = require('../helpers');
+    helpers = require('../helpers'),
+    environment = process.env.NODE_ENV || 'development',
+    config = require('../config/config')(environment),
+    jwt = require('jsonwebtoken');
 
 module.exports = function(data) {
+    const webTokenSecret = config.webTokenSecret;
+
     return {
-        loginLocal(req, res, next) {
-            const auth = passport.authenticate('local', function(error, user) {
-                if (error) {
-                    next(error);
-                    return;
-                }
+        login(req, res) {
+            let username = req.body.username;
+            let password = req.body.password;
 
-                if (!user) {
-                    res.status(400);
-                    res.json({
-                        success: false,
-                        message: 'Invalid name or password!'
+            data.getUserByEmail(username)
+                .then(user => {
+                    console.log(user);
+                    if (user === null || !user.authenticatePassword(password)) {
+                        return res.status(400)
+                                .json({
+                                    succes: 'false',
+                                    message: 'Wrong username or password!'
+                                });
+                    }
+
+                    const webTokenObject = {
+                        _id: user._id,
+                        username: user.username
+                    };
+
+                    return res.status(200).json({
+                        success: true,
+                        _id: user._id,
+                        username: user.username,
+                        auth_token: jwt.sign(webTokenObject, webTokenSecret)
                     });
-                }
-
-                req.login(user, error => {
-                    if (error) {
-                        next(error);
-                        return;
-                    }
-
-                    res.status(200)
-                        .send({ redirectRoute: '/profile' });
-                });
-            });
-
-            return Promise.resolve()
-                .then(() => {
-                    if (!req.isAuthenticated()) {
-                        auth(req, res, next);
-                    } else {
-                        res.redirect('/home');
-                    }
                 });
         },
         logout(req, res) {
@@ -58,19 +56,52 @@ module.exports = function(data) {
                     if (!req.isAuthenticated()) {
                         return data.createUser(user);
                     } else {
-                        res.redirect('/home');
+                        res.status(200)
+                            .send({ redirectRoute: '#/home' });
                     }
                 })
                 .then(() => {
                     passport.authenticate('local')(req, res, function() {
                         res.status(200)
-                            .send({ redirectRoute: '/profile' });
+                            .send({
+                                success: 'true',
+                                redirectRoute: '#/profile'
+                            });
                     });
                 })
                 .catch(error => {
                     res.status(400)
                         .send(JSON.stringify({ validationErrors: helpers.errorHelper(error) }));
                 });
+        },
+        checkAuthentication(req, res) {
+            let token = req.get('AuthToken');
+
+            if (token) {
+                let decoded = jwt.decode(token, config.webTokenSecret);
+
+                return data.getUserByUsername(decoded.username)
+                    .then((user, err) => {
+                        if (!user) {
+                            return res.json({ success: false, message: 'No user.' });
+                        } else {
+                            res.json({
+                                success: true,
+                                user: {
+                                    token,
+                                    username: user.username,
+                                    firstname: user.firstname,
+                                    lastname: user.lastname,
+                                    _id: user._id
+                                }
+                            });
+                        }
+
+                    });
+            }
+            else {
+                return res.json({success: false, message: 'No token, sorry dude'});
+            }
         }
     };
 };

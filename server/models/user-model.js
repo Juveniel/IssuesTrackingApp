@@ -32,14 +32,12 @@ let UserSchema = new Schema({
     },
     firstName: {
         type: String,
-        required: true,
         minLength: [3, 'First mame is too short!'],
         maxLength: [50, 'First name is too long!'],
         match: LETTERS
     },
     lastName: {
         type: String,
-        required: true,
         minLength: [3, 'Last name is too short!'],
         maxLength: [50, 'Last name is too long!'],
         match: LETTERS
