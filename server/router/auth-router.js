@@ -6,7 +6,9 @@ module.exports = function(app, passport, express, data) {
 
     userRouter
         .post('/login', authController.login)
-        .post('/register', authController.register);
+        .post('/register', authController.register)
+        .get('/verify', authController.checkAuthentication)
+        .get('/getLoggedUser', passport.authenticate('jwt'), authController.getLoggedUser);
 
     app.use('/api/auth', userRouter);
 };

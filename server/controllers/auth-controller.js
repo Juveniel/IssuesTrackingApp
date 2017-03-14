@@ -75,9 +75,9 @@ module.exports = function(data) {
                 });
         },
         checkAuthentication(req, res) {
-            let token = req.get('AuthToken');
+            let token = req.headers.authorization;
 
-            if (token) {
+            if (token && token !== 'null') {
                 let decoded = jwt.decode(token, config.webTokenSecret);
 
                 return data.getUserByUsername(decoded.username)
@@ -90,18 +90,37 @@ module.exports = function(data) {
                                 user: {
                                     token,
                                     username: user.username,
-                                    firstname: user.firstname,
-                                    lastname: user.lastname,
                                     _id: user._id
                                 }
                             });
                         }
-
+                    })
+                    .catch(error => {
+                        res.status(400)
+                            .send(JSON.stringify({ error: error }));
                     });
             }
             else {
-                return res.json({success: false, message: 'No token, sorry dude'});
+                return res.json({ success: false, message: 'No token provided!' });
             }
+        },
+        getLoggedUser(req, res) {
+            if (!req.user) {
+                return res.status(200).json({
+                    success: false,
+                    message: 'Please provide token'
+                });
+            }
+
+            let user = {
+                username: req.user.username,
+                _id: req.user._id
+            };
+
+            return res.status(200).json({
+                success: true,
+                user: user
+            });
         }
     };
 };
