@@ -13,15 +13,17 @@ module.exports = function(data) {
             let username = req.body.username;
             let password = req.body.password;
 
+            console.log(req.body);
+
             data.getUserByEmail(username)
                 .then(user => {
-                    console.log(user);
+
                     if (user === null || !user.authenticatePassword(password)) {
                         return res.status(400)
-                                .json({
-                                    succes: 'false',
-                                    message: 'Wrong username or password!'
-                                });
+                            .json({
+                                succes: 'false',
+                                message: 'Wrong username or password!'
+                            });
                     }
 
                     const webTokenObject = {
@@ -35,6 +37,10 @@ module.exports = function(data) {
                         username: user.username,
                         auth_token: jwt.sign(webTokenObject, webTokenSecret)
                     });
+                })
+                .catch(error => {
+                    res.status(400)
+                        .send(JSON.stringify({ validationErrors: error }));
                 });
         },
         logout(req, res) {
@@ -81,7 +87,7 @@ module.exports = function(data) {
                 let decoded = jwt.decode(token, config.webTokenSecret);
 
                 return data.getUserByUsername(decoded.username)
-                    .then((user, err) => {
+                    .then((user) => {
                         if (!user) {
                             return res.json({ success: false, message: 'No user.' });
                         } else {
