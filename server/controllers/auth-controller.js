@@ -13,17 +13,14 @@ module.exports = function(data) {
             let username = req.body.username;
             let password = req.body.password;
 
-            console.log(req.body);
-
             data.getUserByEmail(username)
                 .then(user => {
 
                     if (user === null || !user.authenticatePassword(password)) {
-                        return res.status(400)
-                            .json({
-                                succes: 'false',
-                                message: 'Wrong username or password!'
-                            });
+                        return res.json({
+                            success: false,
+                            message: 'Wrong username or password!'
+                        });
                     }
 
                     const webTokenObject = {
@@ -62,22 +59,21 @@ module.exports = function(data) {
                     if (!req.isAuthenticated()) {
                         return data.createUser(user);
                     } else {
-                        res.status(200)
-                            .send({ redirectRoute: '#/home' });
+                        res.json({ redirectRoute: '#/home' });
                     }
                 })
                 .then(() => {
-                    passport.authenticate('local')(req, res, function() {
-                        res.status(200)
-                            .send({
-                                success: 'true',
-                                redirectRoute: '#/profile'
-                            });
-                    });
+                    res.status(201)
+                        .json({
+                            success: true,
+                            redirectRoute: '#/dashboard/profile'
+                        });
                 })
                 .catch(error => {
-                    res.status(400)
-                        .send(JSON.stringify({ validationErrors: helpers.errorHelper(error) }));
+                    res.json({
+                        success: false,
+                        validationErrors: helpers.errorHelper(error)
+                    });
                 });
         },
         checkAuthentication(req, res) {
