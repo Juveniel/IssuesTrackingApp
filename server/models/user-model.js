@@ -28,7 +28,7 @@ let UserSchema = new Schema({
     },
     salt: String,
     passwordHash: {
-        type: String
+        type: String,
     },
     firstName: {
         type: String,
@@ -68,6 +68,18 @@ UserSchema
     .get(function() {
         return this._password;
     });
+
+UserSchema.path('passwordHash').validate(function(val) {
+    if (this._password) {
+        if (this._password.length < 6) {
+            this.invalidate('password', 'password must be at least 6 characters.');
+        }
+    }
+
+    if (!this._password) {
+        this.invalidate('password', 'password is required');
+    }
+}, null);
 
 UserSchema
     .virtual('fullName')
