@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app, passport, express, data) {
+module.exports = function(app, passport, express, data, auth) {
     let userRouter = new express.Router(),
         userController = require('../controllers/user-controller')(data);
 

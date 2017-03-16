@@ -2,13 +2,13 @@
 
 module.exports = function (data) {
     return {
-        getAllOrganizations(req, res) {
+        getAll(req, res) {
             data.getAllOrganizations()
                 .then((result) => {
                     return res.status(200).json(result);
                 });
         },
-        getOrganizationById(req, res) {
+        getById(req, res) {
             let id = req.params.id;
 
             data.getOrganizationById(id)
@@ -16,7 +16,7 @@ module.exports = function (data) {
                     return res.status(200).json(result);
                 });
         },
-        createOrganization(req, res, next) {
+        create(req, res, next) {
             let name = req.body.name;
 
             data.createOrganization(name)

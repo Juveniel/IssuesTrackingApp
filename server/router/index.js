@@ -7,8 +7,8 @@ const fs = require('fs'),
 
 const routerFileNamesPattern = '-router.js';
 
-module.exports = function (app, config, data) {
+module.exports = function (app, config, data, auth) {
     fs.readdirSync('./server/router')
         .filter(file => file.includes(routerFileNamesPattern))
-        .forEach(file => require(path.join(__dirname, file))(app, passport, express, data));
+        .forEach(file => require(path.join(__dirname, file))(app, passport, express, data, auth));
 };
