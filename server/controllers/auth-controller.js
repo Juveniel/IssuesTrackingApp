@@ -15,7 +15,6 @@ module.exports = function(data) {
 
             data.getUserByEmail(username)
                 .then(user => {
-
                     if (user === null || !user.authenticatePassword(password)) {
                         return res.json({
                             success: false,

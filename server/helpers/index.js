@@ -11,7 +11,7 @@ helpers.errorHelper = function (err) {
             'min': '%s below minimum.',
             'max': '%s above maximum.',
             'enum': '%s not an allowed value.',
-            'unique': 'already exists a user with the same %s.',
+            'unique': '%s already exists.',
             'regexp': '%s contains illegal characters!'
         };
 

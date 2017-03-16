@@ -1,5 +1,7 @@
 'use strict';
 
+let helpers = require('../helpers');
+
 module.exports = function (data) {
     return {
         getAll(req, res) {
@@ -16,15 +18,30 @@ module.exports = function (data) {
                     return res.status(200).json(result);
                 });
         },
-        create(req, res, next) {
-            let name = req.body.name;
+        getByUser(req, res) {
+            let id = req.user._id;
 
-            data.createOrganization(name)
+            data.getOrganizationsByUserId(id)
+                .then((result) => {
+                    return res.status(200).json(result);
+                });
+        },
+        create(req, res, next) {
+            let organization = req.body;
+
+            data.createOrganization(organization)
                 .then((organization) => {
                     return res.status(201).json({
                         success: true,
-                        message: 'Article created!'
+                        message: 'Organization created!'
                     });
+                })
+                .catch(errors => {
+                    res.status(400)
+                        .json({
+                            success: false,
+                            validationErrors: helpers.errorHelper(errors)
+                        });
                 });
         }
     };

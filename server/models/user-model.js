@@ -9,8 +9,6 @@ const LETTERS = /^[A-Za-zА-Яа-я]+$/,
     ALPHA_PATTERN = /^[A-Za-zА-Яа-я0-9]+$/,
     EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-const { organizationSchema } = require('./organization-model');
-
 let UserSchema = new Schema({
     username: {
         type: String,

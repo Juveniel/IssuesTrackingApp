@@ -6,7 +6,7 @@ module.exports = function(app, passport, express, data, auth) {
 
     organizationRouter
         .post('/create', passport.authenticate('jwt'), organizationController.create)
-        .get('/list', passport.authenticate('jwt'), organizationController.getAll);
+        .get('/list', passport.authenticate('jwt'), organizationController.getByUser);
 
-    app.use('/api/organization', organizationRouter);
+    app.use('/api/organizations', organizationRouter);
 };

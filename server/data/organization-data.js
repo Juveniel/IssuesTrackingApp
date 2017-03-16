@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = function(models) {
-    const Organization = models.Organization;
+    const Organization = models.Organization,
+        mongoose = require('mongoose');
 
     return {
         getAllOrganizations() {
@@ -30,6 +31,18 @@ module.exports = function(models) {
                 });
             });
         },
+        getOrganizationsByUserId(id) {
+            console.log(id);
+            return new Promise((resolve, reject) => {
+                Organization.find({ _creator: id}, (err, organizations) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    return resolve(organizations);
+                });
+            });
+        },
         createOrganization(organizationData) {
             let organization = new Organization(organizationData);
 
@@ -38,7 +51,7 @@ module.exports = function(models) {
                     if (error) {
                         return reject(error);
                     }
-
+                    
                     return resolve(organization);
                 });
             });

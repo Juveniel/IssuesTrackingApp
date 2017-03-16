@@ -1,22 +1,24 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-    crypto = require('crypto'),
     uniqueValidator = require('mongoose-unique-validator'),
     Schema = mongoose.Schema;
 
 const ALPHA_PATTERN = /^[A-Za-zА-Яа-я0-9]+$/;
 
 let OrganizationSchema = new Schema({
-    _creator: String,
     name: {
         type: String,
         required: true,
         unique: true,
         dropDups: true,
-        minLength: [3, 'Username is too short!'],
-        maxLength: [50, 'Username is too long!'],
+        minLength: [3, 'Name is too short!'],
+        maxLength: [50, 'Name is too long!'],
         match: ALPHA_PATTERN
+    },
+    _creator: {
+        type: String,
+        ref: 'User'
     },
     members: [{
         type: mongoose.Schema.Types.ObjectId,
