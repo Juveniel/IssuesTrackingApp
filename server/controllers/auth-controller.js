@@ -123,6 +123,9 @@ module.exports = function(data) {
                 success: true,
                 user: user
             });
+        },
+        getUserRole(req, res) {
+            return res.status(200).json(req.user.role);
         }
     };
 };

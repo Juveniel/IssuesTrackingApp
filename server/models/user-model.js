@@ -9,6 +9,8 @@ const LETTERS = /^[A-Za-zА-Яа-я]+$/,
     ALPHA_PATTERN = /^[A-Za-zА-Яа-я0-9]+$/,
     EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const { organizationSchema } = require('./organization-model');
+
 let UserSchema = new Schema({
     username: {
         type: String,
@@ -28,7 +30,11 @@ let UserSchema = new Schema({
     },
     salt: String,
     passwordHash: {
+        type: String
+    },
+    role: {
         type: String,
+        default: 'admin'
     },
     firstName: {
         type: String,
@@ -47,8 +53,12 @@ let UserSchema = new Schema({
     },
     avatarUrl: {
         type: String,
-        default: '/static/uploads/users/avatar.jpg'
+        default: 'avatar.jpg'
     },
+    organizations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization'
+    }],
     dateCreated: {
         type: Date,
         default: Date.now
@@ -69,7 +79,7 @@ UserSchema
         return this._password;
     });
 
-UserSchema.path('passwordHash').validate(function(val) {
+UserSchema.path('passwordHash').validate(function() {
     if (this._password) {
         if (this._password.length < 6) {
             this.invalidate('password', 'password must be at least 6 characters.');
