@@ -35,7 +35,7 @@ module.exports = function(models) {
             let parsedId = new mongoose.Types.ObjectId(id);
 
             return new Promise((resolve, reject) => {
-                Organization.find({ _creator: parsedId })
+                Organization.find({ $or: [ { members: parsedId }, { _creator: parsedId }] })
                     .populate('_creator')
                     .populate('members')
                     .exec(function (err, item) {

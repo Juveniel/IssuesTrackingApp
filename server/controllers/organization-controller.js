@@ -61,6 +61,9 @@ module.exports = function (data) {
                     return data.createUser(userData); 
                 })
                 .then((user) => {
+                    console.log(user);
+                    console.log(user.password);
+
                     let options = {
                         to: `${user.email}`,
                         subject: 'Your theSlyfer account has been created',
