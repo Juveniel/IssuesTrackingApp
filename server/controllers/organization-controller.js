@@ -62,7 +62,7 @@ module.exports = function (data) {
                 })
                 .then((user) => {
                     let options = {
-                        to: 'issues.tracking.app@gmail.com',
+                        to: `${user.email}`,
                         subject: 'Your theSlyfer account has been created',
                         message: `Credentials: username ${user.email} password: ${user.password}`
                     };
