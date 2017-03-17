@@ -17,7 +17,7 @@ let OrganizationSchema = new Schema({
         match: ALPHA_PATTERN
     },
     _creator: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     members: [{

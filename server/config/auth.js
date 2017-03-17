@@ -12,10 +12,11 @@ module.exports = {
             if (req.user && req.user.role === role) {
                 next();
             } else {
-                return res.json({
-                    succes: false,
-                    message: 'You do not have the right permissions!'
-                });
+                return res.status(400)
+                    .json({
+                        success: false,
+                        message: 'You do not have the right permissions!'
+                    });
             }
         }
 };

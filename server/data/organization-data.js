@@ -32,15 +32,19 @@ module.exports = function(models) {
             });
         },
         getOrganizationsByUserId(id) {
-            console.log(id);
-            return new Promise((resolve, reject) => {
-                Organization.find({ _creator: id}, (err, organizations) => {
-                    if (err) {
-                        return reject(err);
-                    }
+            let parsedId = new mongoose.Types.ObjectId(id);
 
-                    return resolve(organizations);
-                });
+            return new Promise((resolve, reject) => {
+                Organization.find({ _creator: parsedId })
+                    .populate('_creator')
+                    .populate('members')
+                    .exec(function (err, item) {
+                        if (err) {
+                            return reject(err);
+                        }
+
+                        return resolve(item);
+                    });
             });
         },
         createOrganization(organizationData) {
@@ -51,9 +55,26 @@ module.exports = function(models) {
                     if (error) {
                         return reject(error);
                     }
-                    
+
                     return resolve(organization);
                 });
+            });
+        },
+        attachMemberToOrganization(orgId, userId) {
+
+            return new Promise((resolve, reject) => {
+                Organization.findByIdAndUpdate(
+                    orgId,
+                    { $push: { 'members': userId } },
+                    { new : true },
+                    function(error, organization) {
+                        if (error) {
+                            return reject(error);
+                        }
+
+                        return resolve(organization);
+                    }
+                );
             });
         }
     };

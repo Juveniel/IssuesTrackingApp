@@ -8,8 +8,8 @@ module.exports = function(environment) {
             webTokenSecret: 'secret mecret',
             connectionString: 'mongodb://localhost:27017/issues-tracking-db',
             port: 3000,
-            email: '',
-            password: ''
+            email: 'issues.tracking.app@gmail.com',
+            password: 'issues123'
         },
         production: {
             cookieName: process.env.COOKIE_NAME,
