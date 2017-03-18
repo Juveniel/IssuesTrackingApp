@@ -2,6 +2,7 @@
 
 module.exports = function(models) {
     const Organization = models.Organization,
+        Project = models.Project,
         mongoose = require('mongoose');
 
     return {
@@ -74,6 +75,19 @@ module.exports = function(models) {
                         return resolve(organization);
                     }
                 );
+            });
+        },
+        getOrganizationProjectsCount(orgId) {
+            let parsedId = new mongoose.Types.ObjectId(orgId);
+
+            return new Promise((resolve, reject) => {
+                Project.count({ organization: parsedId }, function(error, projectsCount) {
+                    if (error) {
+                        return reject(error);
+                    }
+
+                    return resolve(projectsCount);
+                });
             });
         }
     };
