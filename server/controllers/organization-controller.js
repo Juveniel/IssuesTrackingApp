@@ -39,11 +39,10 @@ module.exports = function (data) {
                     });
                 })
                 .catch(errors => {
-                    res.status(400)
-                        .json({
-                            success: false,
-                            validationErrors: helpers.errorHelper(errors)
-                        });
+                    res.json({
+                        success: false,
+                        validationErrors: helpers.errorHelper(errors)
+                    });
                 });
         },
         addMember(req, res, next) {
