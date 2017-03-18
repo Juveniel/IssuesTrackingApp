@@ -5,12 +5,13 @@ const mongoose = require('mongoose'),
     uniqueValidator = require('mongoose-unique-validator'),
     Schema = mongoose.Schema;
 
-const LETTERS = /^[A-Za-zА-Яа-я]+$/,
-    ALPHA_PATTERN = /^[A-Za-zА-Яа-я0-9]+$/,
-    EMAIL_PATTERN = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const ALPHA_PATTERN = /^[A-Za-zА-Яа-я0-9 ]+$/;
 
 let ProjectSchema = new Schema({
-    _creator: String,
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     name: {
         type: String,
         required: true,
@@ -22,9 +23,10 @@ let ProjectSchema = new Schema({
     },
     organization: {
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'Organization'
     },
-    people: [{
+    members: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],

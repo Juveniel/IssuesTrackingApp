@@ -23,13 +23,16 @@ let IssueSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
+        required: true
     },
     project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'
     },
-    category: String,
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    },
     dateCreated: {
         type: Date,
         default: Date.now

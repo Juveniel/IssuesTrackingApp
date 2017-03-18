@@ -53,10 +53,6 @@ let UserSchema = new Schema({
         type: String,
         default: 'avatar.jpg'
     },
-    organizations: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Organization'
-    }],
     dateCreated: {
         type: Date,
         default: Date.now
