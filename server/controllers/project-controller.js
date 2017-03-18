@@ -52,6 +52,23 @@ module.exports = function (data) {
                         validationErrors: helpers.errorHelper(errors)
                     });
                 });
+        },
+        getOrganizationUsers(req, res, next) {
+            let projectId = req.params.id;
+
+            data.getProjectAvailableUsers(projectId)
+                .then((result) => {
+                    return res.status(200).json(result);
+                });
+        },
+        addRemoveMembers(req, res, next) {
+            let projectId = req.params.id,
+                members = req.body;
+
+            data.addRemoveMembersFromProject(projectId, members)
+                .then((result) => {
+                    return res.status(200).json(result);
+                });
         }
     };
 };
