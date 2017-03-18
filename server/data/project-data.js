@@ -2,6 +2,7 @@
 
 module.exports = function(models) {
     const Project = models.Project,
+        Category = models.Category,
         mongoose = require('mongoose');
 
     return {
@@ -35,6 +36,37 @@ module.exports = function(models) {
 
                     return resolve(project);
                 });
+            });
+        },
+        createProjectCategory(categoryData) {
+            let category = new Category(categoryData);
+
+            return new Promise((resolve, reject) => {
+                category.save((error) => {
+                    if (error) {
+                        return reject(error);
+                    }
+
+
+
+                    return resolve(category);
+                });
+            });
+        },
+        attachCategoryToProject(projId, catId) {
+            return new Promise((resolve, reject) => {
+                Project.findByIdAndUpdate(
+                    projId,
+                    { $push: { 'categories': catId } },
+                    { new : true },
+                    function(error, project) {
+                        if (error) {
+                            return reject(error);
+                        }
+
+                        return resolve(project);
+                    }
+                );
             });
         }
     };

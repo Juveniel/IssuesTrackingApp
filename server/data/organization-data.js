@@ -61,7 +61,6 @@ module.exports = function(models) {
             });
         },
         attachMemberToOrganization(orgId, userId) {
-
             return new Promise((resolve, reject) => {
                 Organization.findByIdAndUpdate(
                     orgId,

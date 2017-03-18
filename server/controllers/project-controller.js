@@ -29,6 +29,29 @@ module.exports = function (data) {
                         validationErrors: helpers.errorHelper(errors)
                     });
                 });
+        },
+        createCategory(req, res, next) {
+            let category = req.body;
+
+            data.createProjectCategory(category)
+                .then((category) => {
+                    data.attachCategoryToProject(category.project, category._id);
+                    
+                    return category;
+                })
+                .then((category) => {
+                    return res.status(201).json({
+                        success: true,
+                        category: category,
+                        message: 'Project category created!'
+                    });
+                })
+                .catch(errors => {
+                    res.json({
+                        success: false,
+                        validationErrors: helpers.errorHelper(errors)
+                    });
+                });
         }
     };
 };
