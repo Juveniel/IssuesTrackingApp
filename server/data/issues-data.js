@@ -8,6 +8,19 @@ module.exports = function(models) {
             return new Promise((resolve) => {
                 return resolve(Issue.schema.path('priority').enumValues);
             });
+        },
+        createIssue(issueData) {
+            let issue = new Issue(issueData);
+
+            return new Promise((resolve, reject) => {
+                issue.save((error) => {
+                    if (error) {
+                        return reject(error);
+                    }
+
+                    return resolve(issue);
+                });
+            });
         }
     };
 };

@@ -88,7 +88,6 @@ module.exports = function(models) {
         },
         getProjectAvailableUsers(projId) {
             return new Promise((resolve, reject) => {
-                console.log(projId);
                 this.getProjectById(projId)
                     .then((project) => {
                         let parsedId = new mongoose.Types.ObjectId(project.organization);
@@ -112,7 +111,7 @@ module.exports = function(models) {
                     bulk = Project.collection.initializeOrderedBulkOp();
 
                 bulk.find({ '_id': parsedId }).updateOne({
-                    $addToSet: { 'members': { $each: members.newMembers.map(mongoose.Types.ObjectId) }}
+                    $addToSet: { 'members': { $each: members.newMembers.map(mongoose.Types.ObjectId) } }
                 });
 
                 bulk.find({ '_id': parsedId }).updateOne({
@@ -126,6 +125,22 @@ module.exports = function(models) {
 
                     return resolve(project);
                 });
+            });
+        },
+        attachIssueToProject(projId, issueId) {
+            return new Promise((resolve, reject) => {
+                Project.findByIdAndUpdate(
+                    projId,
+                    { $push: { 'issues': issueId } },
+                    { new : true },
+                    function(error, project) {
+                        if (error) {
+                            return reject(error);
+                        }
+
+                        return resolve(project);
+                    }
+                );
             });
         }
     };

@@ -77,6 +77,38 @@ module.exports = function (data) {
                 .then(([project, priorities]) => {
                     return res.status(200).json({ project, priorities });
                 });
+        },
+        createProjectIssue(req, res, next) {
+            let issueData = req.body;
+
+            let issue = {
+                name: issueData.name,
+                description: issueData.description,
+                project: issueData.id,
+                priority: issueData.priority,
+                assignee: issueData.assignee,
+                category: issueData.category
+            };
+
+            data.createIssue(issue)
+                .then((issue) => {
+                    data.attachIssueToProject(issue.project, issue._id);
+
+                    return issue;
+                })
+                .then((issue) => {
+                    return res.status(201).json({
+                        success: true,
+                        issue: issue,
+                        message: 'Issue category created!'
+                    });
+                })
+                .catch(errors => {
+                    res.json({
+                        success: false,
+                        validationErrors: helpers.errorHelper(errors)
+                    });
+                });
         }
     };
 };

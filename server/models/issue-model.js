@@ -42,6 +42,11 @@ let IssueSchema = new Schema({
         enum: ['Normal', 'Low', 'High', 'Critical'],
         default: 'Normal'
     },
+    status: {
+        type: String,
+        enum: ['Open', 'Resolved'],
+        default: 'Open'
+    },
     dateCreated: {
         type: Date,
         default: Date.now
