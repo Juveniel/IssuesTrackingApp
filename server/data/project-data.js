@@ -15,7 +15,13 @@ module.exports = function(models) {
                     .populate('_creator')
                     .populate('members')
                     .populate('categories')
-                    .populate('issues')
+                    .populate({
+                        path: 'issues',
+                        populate: [
+                            { path: 'assignee', model: 'User' },
+                            { path: 'category', model: 'Category' }
+                        ]
+                    })
                     .exec(function (err, project) {
                         if (err) {
                             return reject(err);
