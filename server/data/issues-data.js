@@ -66,7 +66,7 @@ module.exports = function(models) {
                 Issue.findByIdAndUpdate(
                     issueId,
                     issueUpdate,
-                    { new: true },
+                    { new: true, runValidators: true },
                     function (error, issue) {
                         if (error) {
                             return reject(error);

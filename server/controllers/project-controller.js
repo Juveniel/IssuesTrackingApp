@@ -67,7 +67,17 @@ module.exports = function (data) {
 
             data.addRemoveMembersFromProject(projectId, members)
                 .then((result) => {
-                    return res.status(200).json(result);
+                    return res.status(201).json({
+                        success: true,
+                        result: result,
+                        message: 'Members updated successfully'
+                    });
+                })
+                .catch(errors => {
+                    res.json({
+                        success: false,
+                        validationErrors: helpers.errorHelper(errors)
+                    });
                 });
         },
         getProjectData(req, res, next) {
@@ -100,7 +110,7 @@ module.exports = function (data) {
                     return res.status(201).json({
                         success: true,
                         issue: issue,
-                        message: 'Issue category created!'
+                        message: 'Issue created!'
                     });
                 })
                 .catch(errors => {
