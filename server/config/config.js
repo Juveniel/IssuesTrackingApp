@@ -9,7 +9,9 @@ module.exports = function(environment) {
             connectionString: 'mongodb://localhost:27017/issues-tracking-db',
             port: 3000,
             email: 'issues.tracking.app@gmail.com',
-            password: 'issues123'
+            password: 'issues123',
+            recaptchaKey: '6LdqmRkUAAAAADxGMnsOj8fVAfQhAa9ECg1xsedj',
+            recaptchaSecret: '6LdqmRkUAAAAAOX8oAI2_CY7bRaNAQ2b-RIdAq47'
         },
         production: {
             cookieName: process.env.COOKIE_NAME,

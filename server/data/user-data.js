@@ -1,7 +1,10 @@
 'use strict';
 
 module.exports = function(models) {
-    const User = models.User;
+    const User = models.User,
+        environment = process.env.NODE_ENV || 'development',
+        config = require('../config/config')(environment),
+        Mail = require('../config/mail');
 
     return {
         createUser(userData) {
@@ -96,6 +99,31 @@ module.exports = function(models) {
                     return resolve(users);
                 });
             });
+        },
+        sendContactMail(contactData) {
+            let name = contactData.f_name,
+                email = contactData.f_email,
+                message = contactData.f_message;
+
+            let options = {
+                to: config.email,
+                subject: 'You have a new contact mail from theSlyfer',
+                message: `Name: ${name} Email: ${email} Message: ${message}`
+            };
+
+            let mail = new Mail({
+                to: options.to,
+                subject: options.subject,
+                message: options.message,
+                successCallback: function(success) {
+                    console.log('email sent');
+                },
+                errorCallback: function(err) {
+                    console.log('error: ' + err);
+                }
+            });
+
+            mail.send();
         }
     };
 };
