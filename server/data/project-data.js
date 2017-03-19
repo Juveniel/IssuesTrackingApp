@@ -88,7 +88,7 @@ module.exports = function(models) {
         },
         getProjectAvailableUsers(projId) {
             return new Promise((resolve, reject) => {
-
+                console.log(projId);
                 this.getProjectById(projId)
                     .then((project) => {
                         let parsedId = new mongoose.Types.ObjectId(project.organization);

@@ -69,6 +69,14 @@ module.exports = function (data) {
                 .then((result) => {
                     return res.status(200).json(result);
                 });
+        },
+        getProjectData(req, res, next) {
+            let projectId = req.params.id;
+
+            Promise.all([ data.getProjectById(projectId), data.getIssuePriorities()])
+                .then(([project, priorities]) => {
+                    return res.status(200).json({ project, priorities });
+                });
         }
     };
 };

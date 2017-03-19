@@ -17,8 +17,8 @@ let IssueSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minLength: [3, 'Username is too short!'],
-        maxLength: [50, 'Username is too long!'],
+        minLength: [3, 'Name is too short!'],
+        maxLength: [50, 'Name is too long!'],
         match: ALPHA_PATTERN
     },
     description: {
@@ -32,6 +32,15 @@ let IssueSchema = new Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category'
+    },
+    assignee: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    priority: {
+        type: String,
+        enum: ['Normal', 'Low', 'High', 'Critical'],
+        default: 'Normal'
     },
     dateCreated: {
         type: Date,
