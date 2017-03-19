@@ -54,7 +54,7 @@ module.exports = function (data) {
 
             // Set member role
             userData.role = 'member';
-            
+
             return Promise.resolve()
                 .then(() => {
                     return data.createUser(userData); 
@@ -96,8 +96,7 @@ module.exports = function (data) {
                     });
                 })
                 .catch(errors => {
-                    res.status(400)
-                        .json({
+                    res.json({
                             success: false,
                             validationErrors: helpers.errorHelper(errors)
                         });
