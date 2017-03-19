@@ -54,7 +54,7 @@ module.exports = function (data) {
 
             // Set member role
             userData.role = 'member';
-
+            
             return Promise.resolve()
                 .then(() => {
                     return data.createUser(userData); 
