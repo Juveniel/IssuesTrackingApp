@@ -18,8 +18,7 @@ let IssueSchema = new Schema({
         type: String,
         required: true,
         minLength: [3, 'Name is too short!'],
-        maxLength: [50, 'Name is too long!'],
-        match: ALPHA_PATTERN
+        maxLength: [50, 'Name is too long!']
     },
     description: {
         type: String,
